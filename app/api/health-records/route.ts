@@ -8,7 +8,7 @@ interface OpenEHRRecord {
   type: string
   title: string
   date: string
-  data: any
+  data: Record<string, unknown>
 }
 
 export async function GET() {
@@ -80,24 +80,44 @@ export async function GET() {
   }
 }
 
-function determineRecordType(filename: string, data: any): string {
+function determineRecordType(filename: string, data: Record<string, unknown>): string {
   if (filename.includes('bloodcount')) return 'lab-result'
   if (filename.includes('diagnosis')) return 'diagnosis'  
   if (filename.includes('medication')) return 'medication'
   
   // Fallback to analyzing OpenEHR content
-  const content = data.content?.[0]
-  if (content?.archetype_node_id?.includes('OBSERVATION')) return 'lab-result'
-  if (content?.archetype_node_id?.includes('EVALUATION')) return 'diagnosis'
-  if (content?.archetype_node_id?.includes('INSTRUCTION')) return 'medication'
+  const content = data.content as unknown[]
+  if (Array.isArray(content) && content[0]) {
+    const firstContent = content[0] as Record<string, unknown>
+    const archetypeNodeId = firstContent.archetype_node_id as string
+    if (typeof archetypeNodeId === 'string') {
+      if (archetypeNodeId.includes('OBSERVATION')) return 'lab-result'
+      if (archetypeNodeId.includes('EVALUATION')) return 'diagnosis'
+      if (archetypeNodeId.includes('INSTRUCTION')) return 'medication'
+    }
+  }
   
   return 'unknown'
 }
 
-function extractDate(data: any): string {
+function extractDate(data: Record<string, unknown>): string {
   // Try various OpenEHR date fields
-  if (data.context?.start_time?.value) return data.context.start_time.value
-  if (data.content?.[0]?.data?.events?.[0]?.time?.value) return data.content[0].data.events[0].time.value
+  const context = data.context as Record<string, unknown> | undefined
+  if (context?.start_time && typeof context.start_time === 'object') {
+    const startTime = context.start_time as Record<string, unknown>
+    if (typeof startTime.value === 'string') return startTime.value
+  }
+  
+  const content = data.content as unknown[]
+  if (Array.isArray(content) && content[0]) {
+    const firstContent = content[0] as Record<string, unknown>
+    const contentData = firstContent.data as Record<string, unknown>
+    if (contentData?.events && Array.isArray(contentData.events) && contentData.events[0]) {
+      const firstEvent = contentData.events[0] as Record<string, unknown>
+      const time = firstEvent.time as Record<string, unknown>
+      if (time?.value && typeof time.value === 'string') return time.value
+    }
+  }
   
   return new Date().toISOString()
 }

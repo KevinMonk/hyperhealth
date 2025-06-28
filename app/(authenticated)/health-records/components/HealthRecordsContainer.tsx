@@ -11,7 +11,7 @@ interface OpenEHRRecord {
   type: string
   title: string
   date: string
-  data: any
+  data: Record<string, unknown>
 }
 
 interface GitInfo {
@@ -205,48 +205,81 @@ function RecordPreview({ record }: { record: OpenEHRRecord }) {
   const { type, data } = record
 
   if (type === 'lab-result') {
-    const items = data.content?.[0]?.data?.events?.[0]?.data?.items || []
+    const content = data.content as unknown[]
+    const items = Array.isArray(content) && content[0] ? 
+      ((content[0] as Record<string, unknown>).data as Record<string, unknown>)?.events as unknown[] : []
+    const eventItems = Array.isArray(items) && items[0] ? 
+      (((items[0] as Record<string, unknown>).data as Record<string, unknown>)?.items as unknown[]) || [] : []
+    
     return (
       <div className="space-y-2">
-        {items.slice(0, 2).map((item: any, idx: number) => (
-          <div key={idx} className="text-sm">
-            <span className="font-medium">{item.name?.value}:</span>
-            <span className="ml-2">
-              {item.items?.[0]?.value?.magnitude} {item.items?.[0]?.value?.units}
-            </span>
-          </div>
-        ))}
-        {items.length > 2 && <div className="text-xs text-gray-500">+{items.length - 2} more items</div>}
+        {Array.isArray(eventItems) && eventItems.slice(0, 2).map((item, idx: number) => {
+          const itemData = item as Record<string, unknown>
+          const name = (itemData.name as Record<string, unknown>)?.value as string
+          const itemsArray = itemData.items as unknown[]
+          const firstItem = Array.isArray(itemsArray) && itemsArray[0] ? itemsArray[0] as Record<string, unknown> : null
+          const value = firstItem?.value as Record<string, unknown>
+          
+          return (
+            <div key={idx} className="text-sm">
+              <span className="font-medium">{name}:</span>
+              <span className="ml-2">
+                {String(value?.magnitude || '')} {String(value?.units || '')}
+              </span>
+            </div>
+          )
+        })}
+        {Array.isArray(eventItems) && eventItems.length > 2 && <div className="text-xs text-gray-500">+{eventItems.length - 2} more items</div>}
       </div>
     )
   }
 
   if (type === 'diagnosis') {
-    const problems = data.content || []
+    const problems = (data.content as unknown[]) || []
     return (
       <div className="space-y-2">
-        {problems.slice(0, 2).map((problem: any, idx: number) => (
-          <div key={idx} className="text-sm">
-            <div className="font-medium">{problem.data?.items?.find((i: any) => i.name?.value === 'Problem/Diagnosis name')?.value?.value}</div>
-            <div className="text-xs text-gray-600">
-              Status: {problem.data?.items?.find((i: any) => i.name?.value === 'Clinical status')?.value?.value || 'Unknown'}
+        {Array.isArray(problems) && problems.slice(0, 2).map((problem, idx: number) => {
+          const problemData = problem as Record<string, unknown>
+          const dataItems = (problemData.data as Record<string, unknown>)?.items as unknown[]
+          const diagnosisItem = Array.isArray(dataItems) ? 
+            dataItems.find((i) => ((i as Record<string, unknown>).name as Record<string, unknown>)?.value === 'Problem/Diagnosis name') as Record<string, unknown> : null
+          const statusItem = Array.isArray(dataItems) ? 
+            dataItems.find((i) => ((i as Record<string, unknown>).name as Record<string, unknown>)?.value === 'Clinical status') as Record<string, unknown> : null
+          
+          return (
+            <div key={idx} className="text-sm">
+              <div className="font-medium">{String((diagnosisItem?.value as Record<string, unknown>)?.value || '')}</div>
+              <div className="text-xs text-gray-600">
+                Status: {String((statusItem?.value as Record<string, unknown>)?.value || 'Unknown')}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     )
   }
 
   if (type === 'medication') {
-    const medication = data.content?.[0]
-    const medicationName = medication?.activities?.[0]?.description?.items?.find((i: any) => i.name?.value === 'Medication')?.value?.value
-    const dosage = medication?.activities?.[0]?.description?.items?.find((i: any) => i.archetype_node_id === 'at0152')?.items?.find((i: any) => i.name?.value === 'Dosage')?.value?.value
+    const content = data.content as unknown[]
+    const medication = Array.isArray(content) && content[0] ? content[0] as Record<string, unknown> : null
+    const activities = medication?.activities as unknown[]
+    const activity = Array.isArray(activities) && activities[0] ? activities[0] as Record<string, unknown> : null
+    const description = activity?.description as Record<string, unknown>
+    const items = description?.items as unknown[]
+    
+    const medicationItem = Array.isArray(items) ? 
+      items.find((i) => ((i as Record<string, unknown>).name as Record<string, unknown>)?.value === 'Medication') as Record<string, unknown> : null
+    const dosageItem = Array.isArray(items) ? 
+      items.find((i) => (i as Record<string, unknown>).archetype_node_id === 'at0152') as Record<string, unknown> : null
+    const dosageItems = dosageItem?.items as unknown[]
+    const dosage = Array.isArray(dosageItems) ? 
+      dosageItems.find((i) => ((i as Record<string, unknown>).name as Record<string, unknown>)?.value === 'Dosage') as Record<string, unknown> : null
     
     return (
       <div className="space-y-2">
         <div className="text-sm">
-          <div className="font-medium">{medicationName}</div>
-          <div className="text-xs text-gray-600">Dosage: {dosage}</div>
+          <div className="font-medium">{String((medicationItem?.value as Record<string, unknown>)?.value || '')}</div>
+          <div className="text-xs text-gray-600">Dosage: {String((dosage?.value as Record<string, unknown>)?.value || '')}</div>
         </div>
       </div>
     )
