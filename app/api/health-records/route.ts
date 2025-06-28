@@ -1,7 +1,4 @@
 import { NextResponse } from 'next/server'
-import simpleGit from 'simple-git'
-import fs from 'fs/promises'
-import path from 'path'
 
 interface OpenEHRRecord {
   id: string
@@ -11,38 +8,63 @@ interface OpenEHRRecord {
   data: Record<string, unknown>
 }
 
+interface GitHubFile {
+  name: string
+  download_url: string
+}
+
+interface GitHubCommit {
+  sha: string
+  commit: {
+    message: string
+    author: {
+      name: string
+      date: string
+    }
+  }
+}
+
 export async function GET() {
   try {
-    const repoPath = '/tmp/hhdata-clone'
-    const git = simpleGit()
-
-    // Clean up any existing clone
-    try {
-      await fs.rmdir(repoPath, { recursive: true })
-    } catch (e) {
-      // Directory doesn't exist, that's fine
-    }
-
-    // Clone the repository
-    await git.clone('https://github.com/tijno/hhdata.git', repoPath)
-
-    // Read the OpenEHR files
-    const openehrPath = path.join(repoPath, 'openehr')
-    const files = await fs.readdir(openehrPath)
+    const owner = 'tijno'
+    const repo = 'hhdata'
+    const token = process.env.GITHUB_TOKEN
     
+    if (!token) {
+      throw new Error('GitHub token not configured')
+    }
+    
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'User-Agent': 'HyperHealth-App'
+    }
+    
+    // Fetch file list from GitHub API
+    const filesResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/openehr`, {
+      headers
+    })
+    if (!filesResponse.ok) {
+      throw new Error(`GitHub API error: ${filesResponse.status}`)
+    }
+    
+    const files: GitHubFile[] = await filesResponse.json()
     const records: OpenEHRRecord[] = []
 
+    // Fetch each JSON file
     for (const file of files) {
-      if (file.endsWith('.json')) {
-        const filePath = path.join(openehrPath, file)
-        const content = await fs.readFile(filePath, 'utf-8')
+      if (file.name.endsWith('.json')) {
+        const fileResponse = await fetch(file.download_url, { headers })
+        if (!fileResponse.ok) continue
+        
+        const content = await fileResponse.text()
         const jsonData = JSON.parse(content)
         
         // Extract key information from OpenEHR format
         const record: OpenEHRRecord = {
-          id: jsonData.uid || file.replace('.json', ''),
-          type: determineRecordType(file, jsonData),
-          title: jsonData.name?.value || file.replace('.json', ''),
+          id: jsonData.uid || file.name.replace('.json', ''),
+          type: determineRecordType(file.name, jsonData),
+          title: jsonData.name?.value || file.name.replace('.json', ''),
           date: extractDate(jsonData),
           data: jsonData
         }
@@ -51,19 +73,21 @@ export async function GET() {
       }
     }
 
-    // Get latest commit info
-    const gitInfo = simpleGit(repoPath)
-    const log = await gitInfo.log(['-1'])
-    const latestCommit = log.latest
+    // Get latest commit info from GitHub API
+    const commitsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`, {
+      headers
+    })
+    const commits: GitHubCommit[] = await commitsResponse.json()
+    const latestCommit = commits[0]
 
     return NextResponse.json({
       success: true,
       records,
       gitInfo: {
-        hash: latestCommit?.hash,
-        message: latestCommit?.message,
-        date: latestCommit?.date,
-        author: latestCommit?.author_name
+        hash: latestCommit.sha,
+        message: latestCommit.commit.message,
+        date: latestCommit.commit.author.date,
+        author: latestCommit.commit.author.name
       }
     })
 
