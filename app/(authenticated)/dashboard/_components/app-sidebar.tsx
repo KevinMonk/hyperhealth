@@ -1,6 +1,6 @@
 "use client"
 
-import { Link, Settings2, User, Users, FileText } from "lucide-react"
+import { Link, Settings2, User, Users, FileText, Camera } from "lucide-react"
 import * as React from "react"
 
 import {
@@ -54,6 +54,11 @@ export function AppSidebar({
         title: "Martijn EHR",
         url: "/health-records",
         icon: FileText
+      },
+      {
+        title: "Capture Medical Data",
+        url: "/medical-capture",
+        icon: Camera
       },
       {
         title: "Nav Item 1",
