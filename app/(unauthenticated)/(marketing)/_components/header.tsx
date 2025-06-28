@@ -23,7 +23,7 @@ export function Header({ userMembership }: HeaderProps) {
 
   const navigation = [
     { name: "About", href: "/about" },
-    { name: "Features", href: "/features" },
+    { name: "EHR Records", href: "/health-records" },
     { name: "Pricing", href: "/pricing" },
     { name: "Contact", href: "/contact" }
   ]

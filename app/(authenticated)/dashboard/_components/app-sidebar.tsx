@@ -1,6 +1,6 @@
 "use client"
 
-import { Link, Settings2, User, Users } from "lucide-react"
+import { Link, Settings2, User, Users, FileText } from "lucide-react"
 import * as React from "react"
 
 import {
@@ -50,6 +50,11 @@ export function AppSidebar({
       }
     ],
     navMain: [
+      {
+        title: "Martijn EHR",
+        url: "/health-records",
+        icon: FileText
+      },
       {
         title: "Nav Item 1",
         url: "#",
