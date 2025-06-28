@@ -51,7 +51,7 @@ export function AppSidebar({
     ],
     navMain: [
       {
-        title: "Martijn EHR",
+        title: "Health Records",
         url: "/health-records",
         icon: FileText
       },
@@ -59,32 +59,6 @@ export function AppSidebar({
         title: "Capture Medical Data",
         url: "/medical-capture",
         icon: Camera
-      },
-      {
-        title: "Nav Item 1",
-        url: "#",
-        icon: Link,
-        items: [
-          {
-            title: "Sub Item 1",
-            url: "/dashboard/nav-item-1"
-          },
-          {
-            title: "Sub Item 2",
-            url: "/dashboard/nav-item-2"
-          }
-        ]
-      },
-      {
-        title: "Nav Item 2",
-        url: "#",
-        icon: Link,
-        items: [
-          {
-            title: "Sub Item 1",
-            url: "/dashboard/nav-item-1"
-          }
-        ]
       },
       {
         title: "Settings",

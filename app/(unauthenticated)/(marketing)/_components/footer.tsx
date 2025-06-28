@@ -16,36 +16,32 @@ export function Footer() {
   const footerNavigation = {
     product: [
       { name: "Features", href: "#features" },
-      { name: "Pricing", href: "#pricing" },
-      { name: "Testimonials", href: "#testimonials" },
-      { name: "Integration", href: "#" }
+      { name: "Health Records", href: "/health-records" },
+      { name: "Medical Capture", href: "/medical-capture" },
+      { name: "FAQ", href: "#faq" }
     ],
-    company: [
-      { name: "About", href: "#about" },
-      { name: "Blog", href: "#" },
-      { name: "Careers", href: "#" },
-      { name: "Press", href: "#" }
+    healthcare: [
+      { name: "OpenEHR Standard", href: "https://openehr.org" },
+      { name: "FHIR Compatibility", href: "https://hl7.org/fhir" },
+      { name: "Healthcare Providers", href: "#" },
+      { name: "Patient Rights", href: "#" }
     ],
-    resources: [
-      { name: "Documentation", href: "#" },
-      { name: "Guides", href: "#" },
-      { name: "Help Center", href: "#" },
-      { name: "Community", href: "#" }
+    developers: [
+      { name: "GitHub Repository", href: "https://github.com/KevinMonk/hyperhealth" },
+      { name: "API Documentation", href: "#" },
+      { name: "Contributing", href: "#" },
+      { name: "Issues", href: "https://github.com/KevinMonk/hyperhealth/issues" }
     ],
     legal: [
-      { name: "Privacy", href: "#" },
-      { name: "Terms", href: "#" },
-      { name: "Cookie Policy", href: "#" },
-      { name: "License", href: "#" }
+      { name: "Privacy Policy", href: "#" },
+      { name: "Terms of Service", href: "#" },
+      { name: "HIPAA Compliance", href: "#" },
+      { name: "Open Source License", href: "#" }
     ]
   }
 
   const socialLinks = [
-    { name: "X", href: "https://x.com", icon: XLogo },
-    { name: "YouTube", href: "https://youtube.com", icon: Youtube },
-    { name: "Instagram", href: "https://instagram.com", icon: Instagram },
-    { name: "TikTok", href: "https://tiktok.com", icon: Music2 },
-    { name: "GitHub", href: "https://github.com", icon: Github }
+    { name: "GitHub", href: "https://github.com/KevinMonk/hyperhealth", icon: Github }
   ]
 
   return (
@@ -96,10 +92,10 @@ export function Footer() {
               </div>
               <div className="mt-10 md:mt-0">
                 <h3 className="text-foreground text-sm leading-6 font-semibold">
-                  Company
+                  Healthcare
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {footerNavigation.company.map(item => (
+                  {footerNavigation.healthcare.map(item => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
@@ -115,10 +111,10 @@ export function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-foreground text-sm leading-6 font-semibold">
-                  Resources
+                  Developers
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {footerNavigation.resources.map(item => (
+                  {footerNavigation.developers.map(item => (
                     <li key={item.name}>
                       <Link
                         href={item.href}

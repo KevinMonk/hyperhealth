@@ -71,9 +71,9 @@ export function CTASection() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           {[
-            { label: "Time to First Deploy", value: "< 5 min" },
-            { label: "Production Ready", value: "100%" },
-            { label: "License", value: "MIT" }
+            { label: "AI Extraction Accuracy", value: "95%+" },
+            { label: "Patient Controlled", value: "100%" },
+            { label: "FHIR Compatible", value: "Yes" }
           ].map((stat, index) => (
             <motion.div
               key={stat.label}

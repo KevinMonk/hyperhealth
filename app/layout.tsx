@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Mckay's App Template",
-  description: "The easiest way to start your next project."
+  title: "HyperHealth - Distributed EHR",
+  description: "A distributed Electronic Health Record system that follows the patient - powered by AI and Git version control."
 }
 
 export default function RootLayout({

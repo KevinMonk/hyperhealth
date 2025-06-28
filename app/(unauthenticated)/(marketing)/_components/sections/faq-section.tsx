@@ -12,34 +12,34 @@ import { SectionWrapper } from "./section-wrapper"
 
 const faqs = [
   {
-    question: "What's included in the template?",
+    question: "What is HyperHealth?",
     answer:
-      "Everything you need to build a production app: Next.js 15 with App Router, TypeScript, Tailwind CSS v4, shadcn/ui components, Clerk authentication, Stripe payments, PostgreSQL with Drizzle ORM, and PostHog analytics. All pre-configured and ready to use."
+      "HyperHealth is a distributed Electronic Health Record (EHR) system that uses Git's version control technology to manage patient health data. Unlike traditional centralized EHR systems, HyperHealth allows patients to own and control their complete medical history while enabling secure sharing with healthcare providers."
   },
   {
-    question: "How do I get started?",
+    question: "How does the AI extraction work?",
     answer:
-      "Simply clone the repository from GitHub, copy the .env.example to .env.local, add your API keys, run npm install, and you're ready to go. The whole process takes less than 5 minutes."
+      "HyperHealth uses Google Gemini AI to automatically extract structured medical data from various sources including medical documents, lab results, clinical notes, and medical images. The AI identifies and categorizes medical information with confidence scores, making it easy to digitize paper records."
   },
   {
-    question: "Is this really free?",
+    question: "Is my health data secure?",
     answer:
-      "Yes! This template is 100% free and open source under the MIT license. You can use it for personal projects, commercial applications, or anything else. No hidden costs or premium features."
+      "Yes! HyperHealth uses end-to-end encryption and follows healthcare security standards. Your data is distributed across Git repositories with full access control - you decide who can view or modify your records. No single entity controls your complete medical history."
   },
   {
-    question: "Can I customize everything?",
+    question: "How is this different from traditional EHR systems?",
     answer:
-      "Absolutely! You have full access to all the source code. Modify the components, change the styling, add or remove features - it's your codebase now. The template is designed to be a starting point that you can build upon."
+      "Traditional EHR systems are centralized and controlled by healthcare institutions. HyperHealth is patient-controlled and distributed - your health records follow you, not the other way around. You can grant access to any healthcare provider while maintaining complete ownership of your data."
   },
   {
-    question: "What about deployment?",
+    question: "What is OpenEHR compatibility?",
     answer:
-      "The template works with any hosting provider that supports Next.js. Deploy to Vercel, Netlify, Railway, or any other platform. Database can be hosted on Supabase, Neon, or any PostgreSQL provider."
+      "OpenEHR is an international standard for electronic health records that ensures interoperability between different healthcare systems. HyperHealth uses OpenEHR archetypes to structure health data, making it compatible with existing healthcare infrastructure worldwide."
   },
   {
-    question: "How do I get help if I'm stuck?",
+    question: "Can healthcare providers integrate with HyperHealth?",
     answer:
-      "Open an issue on GitHub for bugs or feature requests. For general questions, the community is active in discussions. If you need dedicated support, consider becoming a sponsor or reaching out for custom development."
+      "Yes! Healthcare providers can integrate with HyperHealth through our API to access patient records (with permission), contribute new data, and maintain their own distributed copies. This creates a network effect where health data becomes more valuable as more providers participate."
   }
 ]
 
@@ -74,8 +74,8 @@ export function FAQSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Everything you need to know about the template. Can't find what
-            you're looking for? Open an issue on GitHub.
+            Everything you need to know about HyperHealth. Can't find what
+            you're looking for? Contact us or open an issue on GitHub.
           </motion.p>
           <dl className="mt-10 space-y-6">
             {faqs.map((faq, index) => (

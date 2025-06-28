@@ -22,10 +22,10 @@ export function Header({ userMembership }: HeaderProps) {
   }, [])
 
   const navigation = [
-    { name: "About", href: "/about" },
-    { name: "EHR Records", href: "/health-records" },
-    { name: "Pricing", href: "/pricing" },
-    { name: "Contact", href: "/contact" }
+    { name: "About", href: "#features" },
+    { name: "Health Records", href: "/health-records" },
+    { name: "FAQ", href: "#faq" },
+    { name: "GitHub", href: "https://github.com/KevinMonk/hyperhealth" }
   ]
 
   return (
@@ -37,7 +37,7 @@ export function Header({ userMembership }: HeaderProps) {
         >
           <div className="flex lg:flex-1">
             <Link href="/" className="-m-1.5 p-1.5">
-              <span className="text-xl font-bold">Mckay's App Template</span>
+              <span className="text-xl font-bold">HyperHealth</span>
             </Link>
           </div>
           <div className="flex lg:hidden">
@@ -92,10 +92,9 @@ export function Header({ userMembership }: HeaderProps) {
                   <Link href="/dashboard">Dashboard</Link>
                 </Button>
               ) : (
-                <Button asChild className="gap-2">
-                  <Link href="/#pricing">
-                    <Sparkles className="h-4 w-4" />
-                    Upgrade
+                <Button asChild>
+                  <Link href="/dashboard">
+                    Dashboard
                   </Link>
                 </Button>
               )}
@@ -122,7 +121,7 @@ export function Header({ userMembership }: HeaderProps) {
                 className="-m-1.5 p-1.5"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="text-xl font-bold">Takeoff</span>
+                <span className="text-xl font-bold">HyperHealth</span>
               </Link>
               <button
                 type="button"
@@ -192,13 +191,12 @@ export function Header({ userMembership }: HeaderProps) {
                         </Link>
                       </Button>
                     ) : (
-                      <Button className="w-full gap-2" asChild>
+                      <Button className="w-full" asChild>
                         <Link
-                          href="/#pricing"
+                          href="/dashboard"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <Sparkles className="h-4 w-4" />
-                          Upgrade
+                          Dashboard
                         </Link>
                       </Button>
                     )}

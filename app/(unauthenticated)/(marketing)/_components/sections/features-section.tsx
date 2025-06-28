@@ -13,40 +13,40 @@ import { SectionWrapper } from "./section-wrapper"
 
 const features = [
   {
-    name: "Authentication Ready",
+    name: "AI-Powered Extraction",
     description:
-      "Clerk authentication pre-configured with protected routes, user management, and session handling.",
+      "Google Gemini AI automatically extracts structured medical data from documents, images, and clinical notes.",
     icon: Shield
   },
   {
-    name: "Payments Integration",
+    name: "Distributed Architecture",
     description:
-      "Stripe integration with webhook support, subscription management, and checkout flows.",
-    icon: CreditCard
-  },
-  {
-    name: "Database Setup",
-    description:
-      "PostgreSQL with Drizzle ORM configured and ready. Includes migrations and type-safe queries.",
-    icon: Database
-  },
-  {
-    name: "Modern UI Components",
-    description:
-      "Beautiful, accessible components with shadcn/ui. Dark mode support and Tailwind CSS v4.",
-    icon: Palette
-  },
-  {
-    name: "TypeScript First",
-    description:
-      "Full TypeScript support with strict mode, path aliases, and type safety throughout.",
+      "Git-based version control for health records with no single point of failure or central authority.",
     icon: Code2
   },
   {
-    name: "Analytics Built-in",
+    name: "OpenEHR Compatible",
     description:
-      "PostHog analytics integration for tracking user behavior and product metrics.",
+      "Standards-compliant health records using OpenEHR archetypes for interoperability.",
+    icon: Database
+  },
+  {
+    name: "Patient-Controlled",
+    description:
+      "Patients own and control their health data, granting access to healthcare providers as needed.",
+    icon: Palette
+  },
+  {
+    name: "Version Control",
+    description:
+      "Complete audit trail and versioning of all medical records using Git's proven technology.",
     icon: BarChart
+  },
+  {
+    name: "Secure & Private",
+    description:
+      "End-to-end encryption with authentication and authorization built on proven security frameworks.",
+    icon: CreditCard
   }
 ]
 
@@ -65,7 +65,7 @@ export function FeaturesSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            Everything Included
+            Healthcare Revolution
           </motion.h2>
           <motion.p
             className="text-foreground mt-2 text-3xl font-bold tracking-tight sm:text-4xl"
@@ -74,7 +74,7 @@ export function FeaturesSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Start with a complete foundation
+            Health records that follow the patient
           </motion.p>
           <motion.p
             className="text-muted-foreground mt-6 text-lg leading-8"
@@ -83,8 +83,8 @@ export function FeaturesSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            No more setup headaches. Clone the repo and start building your
-            product immediately.
+            Break free from centralized EHR systems. Your health data, your control,
+            powered by distributed technology.
           </motion.p>
         </div>
 
