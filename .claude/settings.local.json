@@ -7,7 +7,10 @@
       "Bash(npm install:*)",
       "Bash(env)",
       "Bash(npx drizzle-kit:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm run types:*)",
+      "Bash(npm run lint)"
     ],
     "deny": []
   }

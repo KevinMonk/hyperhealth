@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -16,7 +17,8 @@ import {
   Calendar,
   GitBranch,
   User,
-  Activity
+  Activity,
+  ChevronRight
 } from "lucide-react"
 import { format } from "date-fns"
 
@@ -67,6 +69,7 @@ export function HealthRecordsTimeline({ userId, userRole }: HealthRecordsTimelin
   const [records, setRecords] = useState<HealthRecord[]>([])
   const [loading, setLoading] = useState(true)
   const [lastSync, setLastSync] = useState<Date | null>(null)
+  const router = useRouter()
 
   const fetchRecords = useCallback(async () => {
     setLoading(true)
@@ -189,7 +192,11 @@ export function HealthRecordsTimeline({ userId, userRole }: HealthRecordsTimelin
                     const colorClass = getRecordColor(record.type)
                     
                     return (
-                      <Card key={record.id} className="relative">
+                      <Card 
+                        key={record.id} 
+                        className="relative cursor-pointer hover:shadow-md transition-shadow"
+                        onClick={() => router.push(`/dashboard/records/${record.id}`)}
+                      >
                         {/* Timeline connector */}
                         {index < dayRecords.length - 1 && (
                           <div className="absolute left-6 top-16 w-px h-8 bg-border" />
@@ -202,7 +209,10 @@ export function HealthRecordsTimeline({ userId, userRole }: HealthRecordsTimelin
                             </div>
                             <div className="flex-1 space-y-1">
                               <div className="flex items-center justify-between">
-                                <CardTitle className="text-base">{record.title}</CardTitle>
+                                <CardTitle className="text-base flex items-center gap-2">
+                                  {record.title}
+                                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                </CardTitle>
                                 <div className="flex items-center gap-2">
                                   {record.confidence && (
                                     <Badge variant="secondary" className="text-xs">

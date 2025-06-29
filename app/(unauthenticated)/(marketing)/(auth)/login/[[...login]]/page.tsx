@@ -37,7 +37,7 @@ export default function LoginPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Continue building
+              Your health records,
               <motion.span
                 className="from-brand-primary to-brand-secondary mt-2 block bg-gradient-to-r bg-clip-text text-transparent"
                 animate={{
@@ -52,7 +52,7 @@ export default function LoginPage() {
                   backgroundSize: "200% 200%"
                 }}
               >
-                amazing products
+                in one place
               </motion.span>
             </motion.h1>
             <motion.p
