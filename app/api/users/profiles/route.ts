@@ -22,7 +22,8 @@ export async function POST(request: NextRequest) {
     const userProfiles = await Promise.all(
       userIds.map(async (userId) => {
         try {
-          const clerkUser = await clerkClient.users.getUser(userId)
+          const client = await clerkClient()
+          const clerkUser = await client.users.getUser(userId)
           
           return {
             id: clerkUser.id,

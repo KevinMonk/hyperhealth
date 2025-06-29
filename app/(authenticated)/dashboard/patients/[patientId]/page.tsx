@@ -4,12 +4,13 @@ import { getUserProfile } from "@/actions/user-profiles"
 import { PatientDashboard } from "./components/PatientDashboard"
 
 interface PatientPageProps {
-  params: {
+  params: Promise<{
     patientId: string
-  }
+  }>
 }
 
 export default async function PatientPage({ params }: PatientPageProps) {
+  const { patientId } = await params
   const user = await currentUser()
   
   if (!user) {
@@ -37,7 +38,7 @@ export default async function PatientPage({ params }: PatientPageProps) {
 
   return (
     <PatientDashboard 
-      patientId={params.patientId}
+      patientId={patientId}
       doctor={doctorData}
     />
   )

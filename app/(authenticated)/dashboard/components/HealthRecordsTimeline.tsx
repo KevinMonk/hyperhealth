@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -68,7 +68,7 @@ export function HealthRecordsTimeline({ userId, userRole }: HealthRecordsTimelin
   const [loading, setLoading] = useState(true)
   const [lastSync, setLastSync] = useState<Date | null>(null)
 
-  const fetchRecords = async () => {
+  const fetchRecords = useCallback(async () => {
     setLoading(true)
     try {
       const response = await fetch(`/api/health-records?userId=${userId}&role=${userRole}`)
@@ -105,11 +105,11 @@ export function HealthRecordsTimeline({ userId, userRole }: HealthRecordsTimelin
     } finally {
       setLoading(false)
     }
-  }
+  }, [userId, userRole])
 
   useEffect(() => {
     fetchRecords()
-  }, [userId, userRole])
+  }, [fetchRecords])
 
   const groupedRecords = records.reduce((groups, record) => {
     const date = format(new Date(record.date), 'yyyy-MM-dd')

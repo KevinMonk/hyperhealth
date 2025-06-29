@@ -1,6 +1,6 @@
 "use client"
 
-import { Link, Settings2, User, Users, FileText, Camera, Shield, Crown } from "lucide-react"
+import { Link, Settings2, User, Users, FileText, Camera, Shield, Crown, type LucideIcon } from "lucide-react"
 import * as React from "react"
 
 import {
@@ -32,7 +32,12 @@ export function AppSidebar({
   const isVerified = userData.verified
 
   // Build navigation based on user role
-  const navItems = [
+  const navItems: Array<{
+    title: string
+    url: string
+    icon: LucideIcon
+    items?: { title: string; url: string }[]
+  }> = [
     {
       title: "My Health Records",
       url: "/dashboard",

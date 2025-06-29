@@ -47,7 +47,7 @@ export default function DashboardClientLayout({
 
   const getBreadcrumbs = () => {
     const paths = pathname.split("/").filter(Boolean)
-    const breadcrumbs = []
+    const breadcrumbs: Array<{ name: string; href: string; current?: boolean }> = []
 
     if (paths[0] === "dashboard") {
       breadcrumbs.push({ name: "Dashboard", href: "/dashboard" })

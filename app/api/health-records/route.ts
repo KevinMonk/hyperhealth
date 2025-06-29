@@ -135,7 +135,7 @@ export async function GET(request: Request) {
     } else {
       // For single user or directory
       const files: GitHubFile[] = await filesResponse.json()
-      await processFiles(files, headers, records, latestCommit, requestedUserId)
+      await processFiles(files, headers, records, latestCommit, requestedUserId || undefined)
     }
 
     // Filter records based on user role and requested user

@@ -6,7 +6,8 @@
       "Bash(rm:*)",
       "Bash(npm install:*)",
       "Bash(env)",
-      "Bash(npx drizzle-kit:*)"
+      "Bash(npx drizzle-kit:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": []
   }

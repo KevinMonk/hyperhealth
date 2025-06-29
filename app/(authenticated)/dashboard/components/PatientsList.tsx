@@ -52,8 +52,8 @@ export function PatientsList() {
         const data = await response.json()
         
         // Group records by patient ID
-        const patientGroups = data.records.reduce((groups: Record<string, any[]>, record: any) => {
-          const patientId = record.patientId || 'unknown'
+        const patientGroups = data.records.reduce((groups: Record<string, Record<string, unknown>[]>, record: Record<string, unknown>) => {
+          const patientId = (record.patientId as string) || 'unknown'
           if (!groups[patientId]) {
             groups[patientId] = []
           }
@@ -63,14 +63,16 @@ export function PatientsList() {
 
         // Convert to patient records
         const patientRecords: PatientRecord[] = Object.entries(patientGroups).map(([patientId, records]) => {
-          const recordTypes = [...new Set(records.map(r => r.type))]
-          const lastActivity = records.reduce((latest, record) => {
-            return new Date(record.date) > new Date(latest) ? record.date : latest
-          }, records[0]?.date || new Date().toISOString())
+          const typedRecords = records as Record<string, unknown>[]
+          const recordTypes: string[] = [...new Set(typedRecords.map((r: Record<string, unknown>) => r.type as string))] as string[]
+          const lastActivity = typedRecords.reduce((latest: string, record: Record<string, unknown>) => {
+            const recordDate = record.date as string || new Date().toISOString()
+            return new Date(recordDate) > new Date(latest) ? recordDate : latest
+          }, (typedRecords[0] as Record<string, unknown>)?.date as string || new Date().toISOString())
 
           return {
             patientId,
-            recordCount: records.length,
+            recordCount: typedRecords.length,
             lastActivity,
             recordTypes
           }
@@ -98,7 +100,7 @@ export function PatientsList() {
             // Combine patient records with profiles
             const patientsWithProfiles: PatientWithProfile[] = patientRecords.map(patient => ({
               ...patient,
-              profile: profilesMap.get(patient.patientId)
+              profile: profilesMap.get(patient.patientId) as UserProfile | undefined
             }))
             
             setPatients(patientsWithProfiles)

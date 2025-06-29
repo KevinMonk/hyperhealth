@@ -14,6 +14,7 @@ import {
   Activity,
   Calendar
 } from "lucide-react"
+import Link from "next/link"
 import { HealthRecordsTimeline } from "../../../components/HealthRecordsTimeline"
 import { MedicalDataCapture } from "../../../components/MedicalDataCapture"
 
@@ -39,10 +40,10 @@ export function PatientDashboard({ patientId, doctor }: PatientDashboardProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button variant="outline" size="sm" asChild>
-            <a href="/dashboard/patients">
+            <Link href="/dashboard/patients">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Patients
-            </a>
+            </Link>
           </Button>
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Patient Records</h1>

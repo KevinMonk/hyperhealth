@@ -27,7 +27,7 @@ interface ExtractedRecord {
   title: string
   description: string
   confidence: number
-  data: any
+  data: Record<string, unknown>
 }
 
 interface MedicalDataCaptureProps {
