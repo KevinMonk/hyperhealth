@@ -120,7 +120,7 @@ async function commitToGitHub(records: ProcessedRecord[], userId: string, custom
     
     // Generate filename with timestamp and type
     const filename = `${record.type}_${timestamp}_${timeComponent}_${i}.json`
-    const filePath = `openehr/${filename}`
+    const filePath = `${userId}/${filename}`
     
     // Create comprehensive commit message
     const commitMessage = customMessage || generateCommitMessage(record, userId)

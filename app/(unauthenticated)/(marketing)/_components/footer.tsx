@@ -16,8 +16,7 @@ export function Footer() {
   const footerNavigation = {
     product: [
       { name: "Features", href: "#features" },
-      { name: "Health Records", href: "/health-records" },
-      { name: "Medical Capture", href: "/medical-capture" },
+      { name: "Dashboard", href: "/dashboard" },
       { name: "FAQ", href: "#faq" }
     ],
     healthcare: [

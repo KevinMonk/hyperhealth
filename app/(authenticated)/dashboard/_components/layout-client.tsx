@@ -27,6 +27,8 @@ export default function DashboardClientLayout({
     email: string
     avatar: string
     membership: string
+    role: string
+    verified: boolean
   }
 }) {
   const pathname = usePathname()
@@ -125,6 +127,24 @@ export default function DashboardClientLayout({
               })
             }
           }
+        } else if (paths[1] === "patients") {
+          breadcrumbs.push({ name: "Patient Records", href: "/dashboard/patients" })
+          
+          if (paths[2]) {
+            // Individual patient page
+            const patientId = paths[2]
+            const shortId = patientId.substring(0, 8) + "..."
+            breadcrumbs.push({ 
+              name: `Patient ${shortId}`, 
+              href: pathname, 
+              current: true 
+            })
+          } else {
+            // Just the patients list
+            breadcrumbs[breadcrumbs.length - 1].current = true
+          }
+        } else if (paths[1] === "admin") {
+          breadcrumbs.push({ name: "Admin Panel", href: pathname, current: true })
         } else {
           breadcrumbs.push({ name: pageName, href: pathname, current: true })
         }

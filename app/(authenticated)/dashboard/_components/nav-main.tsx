@@ -105,7 +105,7 @@ export function NavMain({
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-            ) : (
+            ) : item.items && item.items.length > 0 ? (
               <Collapsible
                 asChild
                 open={openItems[item.title] ?? true}
@@ -135,6 +135,14 @@ export function NavMain({
                   </CollapsibleContent>
                 </div>
               </Collapsible>
+            ) : (
+              // Direct link for items without sub-items
+              <SidebarMenuButton asChild tooltip={item.title}>
+                <Link href={item.url}>
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
             )}
           </SidebarMenuItem>
         ))}

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(rm:*)",
+      "Bash(npm install:*)",
+      "Bash(env)",
+      "Bash(npx drizzle-kit:*)"
+    ],
+    "deny": []
+  }
+}

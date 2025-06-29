@@ -23,7 +23,6 @@ export function Header({ userMembership }: HeaderProps) {
 
   const navigation = [
     { name: "About", href: "#features" },
-    { name: "Health Records", href: "/health-records" },
     { name: "FAQ", href: "#faq" },
     { name: "GitHub", href: "https://github.com/KevinMonk/hyperhealth" }
   ]
